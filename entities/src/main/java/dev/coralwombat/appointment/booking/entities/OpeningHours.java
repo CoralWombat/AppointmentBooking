@@ -1,5 +1,6 @@
 package dev.coralwombat.appointment.booking.entities;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
@@ -15,8 +16,10 @@ import lombok.Data;
 @Entity
 @Table(name = "opening_hours")
 @Data
-public class OpeningHours {
-	
+public class OpeningHours implements Serializable {
+
+	private static final long serialVersionUID = -8928316118076792489L;
+
 	@Id
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id", nullable = false)
@@ -26,10 +29,10 @@ public class OpeningHours {
 	@Column(name = "day")
 	DayOfWeek day;
 
-	@Column(name = "from")
+	@Column(name = "fromTime")
 	LocalTime from;
 
-	@Column(name = "to")
+	@Column(name = "toTime")
 	LocalTime to;
 
 }
