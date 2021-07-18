@@ -2,8 +2,14 @@ package dev.coralwombat.appointment.booking.clientservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "dev.coralwombat.appointment.booking.clientservice")
+@EnableConfigurationProperties
+@EntityScan(basePackages = { "dev.coralwombat.appointment.booking.entities" })
 public class ClientServiceApplication {
 
 	public static void main(String[] args) {

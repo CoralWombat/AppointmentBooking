@@ -39,6 +39,10 @@
 			<groupId>dev.coralwombat</groupId>
 			<artifactId>entities</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
