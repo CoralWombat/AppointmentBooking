@@ -1,6 +1,5 @@
 package dev.coralwombat.appointment.booking.admin;
 
-import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import org.h2.tools.Server;
@@ -10,9 +9,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 
-import lombok.extern.log4j.Log4j2;
-
-@Log4j2
 @SpringBootApplication
 @ComponentScan(basePackages = "dev.coralwombat.appointment.booking.admin")
 @EnableConfigurationProperties
