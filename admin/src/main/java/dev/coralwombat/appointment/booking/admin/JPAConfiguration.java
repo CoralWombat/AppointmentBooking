@@ -24,14 +24,14 @@ public class JPAConfiguration {
 
 		dataSource.setUsername("testuser");
 		dataSource.setPassword("testpass");
-		dataSource.setUrl("jdbc:h2:mem:testDb;DB_CLOSE_DELAY=-1");
+		dataSource.setUrl("jdbc:h2:file:./database");
 
 		return dataSource;
 	}
 
 	Properties additionalProperties() {
 		var properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 
 		return properties;
@@ -48,11 +48,6 @@ public class JPAConfiguration {
 		em.setJpaProperties(additionalProperties());
 
 		return em;
-	}
-
-	@Bean(initMethod = "start", destroyMethod = "stop")
-	public Server inMemoryH2DatabaseaServer() throws SQLException {
-		return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9090");
 	}
 
 }

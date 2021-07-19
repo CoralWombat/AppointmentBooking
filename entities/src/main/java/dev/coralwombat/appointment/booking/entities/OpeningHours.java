@@ -22,7 +22,7 @@ public class OpeningHours implements Serializable {
 
 	@Id
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "id", nullable = false)
+	@JoinColumn(name = "category_id", nullable = false)
 	Category category;
 
 	@Id
