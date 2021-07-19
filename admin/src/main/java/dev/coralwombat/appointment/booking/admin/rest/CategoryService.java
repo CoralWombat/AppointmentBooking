@@ -40,8 +40,10 @@ public class CategoryService {
 		category.setName(name);
 		if (parent != null) {
 			var parentCategory = entityManager.find(Category.class, parent);
-			if (parentCategory == null)
+			if (parentCategory == null) {
+				log.error("Could not find parent. id=" + parent);
 				return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			}
 			category.setParent(parentCategory);
 		}
 		entityManager.merge(category);
@@ -53,7 +55,9 @@ public class CategoryService {
 	@Transactional
 	@DeleteMapping(path = "/delete")
 	public void delete(@RequestParam(required = true) Integer id) {
+		log.info("CategoryService.delete() called with: id=" + id);
 		entityManager.createQuery("DELETE FROM Category c WHERE c.id = :id").setParameter("id", id).executeUpdate();
+		log.info("CategoryService.delete() finished.");
 	}
 
 }
