@@ -16,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import dev.coralwombat.appointment.booking.dto.CategoryDTO;
 import dev.coralwombat.appointment.booking.entities.Category;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -28,7 +30,9 @@ public class CategoryService {
 
 	@Transactional
 	@PutMapping(path = "/put")
-	public ResponseEntity<Object> put(@RequestBody(required = true) CategoryDTO category) {
+	@ApiOperation(value = "Puts a category into the database", notes = "Puts the given category into the database. If the category already exists it updates it. If the parent does not exist, the created category will be a root category.")
+	public ResponseEntity<Object> put(
+			@ApiParam(required = true, value = "The category to insert or update.") @RequestBody(required = true) CategoryDTO category) {
 		log.info("CategoryService.put() called with: category=" + category.toString() + ".");
 		HttpStatus status = HttpStatus.OK;
 
@@ -49,7 +53,8 @@ public class CategoryService {
 
 	@Transactional
 	@DeleteMapping(path = "/delete")
-	public void delete(@RequestParam(required = true) Integer id) {
+	public void delete(
+			@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer id) {
 		log.info("CategoryService.delete() called with: id=" + id);
 		boolean hasChildren = entityManager
 				.createQuery("SELECT c FROM Category c WHERE c.parent = :parentId", Category.class)

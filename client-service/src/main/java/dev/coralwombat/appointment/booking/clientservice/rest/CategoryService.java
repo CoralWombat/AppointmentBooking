@@ -16,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import dev.coralwombat.appointment.booking.dto.CategoryDTO;
 import dev.coralwombat.appointment.booking.entities.Category;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -27,6 +29,7 @@ public class CategoryService {
 	EntityManager entityManager;
 
 	@GetMapping(path = "/getAll")
+	@ApiOperation(value = "Gets all categories", notes = "Retrieves all categories from the database.")
 	public ResponseEntity<Collection<CategoryDTO>> getAll() {
 		log.info("CategoryService.getAll() called.");
 
@@ -43,6 +46,7 @@ public class CategoryService {
 	}
 
 	@GetMapping(path = "/getMain")
+	@ApiOperation(value = "Gets all main categories", notes = "Retrieves all main categories from the database.")
 	public ResponseEntity<Collection<CategoryDTO>> getMain() {
 		log.info("CategoryService.getMain() called.");
 
@@ -58,8 +62,10 @@ public class CategoryService {
 		return ResponseEntity.ok(categories);
 	}
 
+	@ApiOperation(value = "Gets all child categories of the given parent", notes = "Retrieves all child categories of the parent category from the database.")
 	@GetMapping(path = "/getChildren")
-	public ResponseEntity<Collection<CategoryDTO>> getChildren(@RequestParam(required = true) Integer parentId) {
+	public ResponseEntity<Collection<CategoryDTO>> getChildren(
+			@ApiParam(required = true, value = "The ID of the parent category.") @RequestParam(required = true) Integer parentId) {
 		log.info("CategoryService.getChildren() called with: parentId=" + parentId);
 
 		var parent = entityManager.find(Category.class, parentId);
