@@ -39,13 +39,13 @@ public class CategoryService {
 		var dbCategory = entityManager.find(Category.class, category.getId());
 		if (dbCategory == null) {
 			status = HttpStatus.CREATED;
+			dbCategory = new Category();
 		}
 
-		var entityCategory = new Category();
-		entityCategory.setId(category.getId());
-		entityCategory.setName(category.getName());
-		entityCategory.setParent(entityManager.find(Category.class, category.getParent()));
-		entityManager.merge(entityCategory);
+		dbCategory.setId(category.getId());
+		dbCategory.setName(category.getName());
+		dbCategory.setParent(entityManager.find(Category.class, category.getParent()));
+		entityManager.merge(dbCategory);
 
 		log.info("CategoryService.put() finished.");
 		return ResponseEntity.status(status).build();
@@ -56,7 +56,7 @@ public class CategoryService {
 	public void delete(
 			@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer id) {
 		log.info("CategoryService.delete() called with: id=" + id);
-		boolean hasChildren = entityManager
+		boolean hasChildren = !entityManager
 				.createQuery("SELECT c FROM Category c WHERE c.parent = :parentId", Category.class)
 				.setParameter("parentId", entityManager.find(Category.class, id)).getResultList().isEmpty();
 		if (hasChildren)
