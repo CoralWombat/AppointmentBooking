@@ -1,5 +1,6 @@
 package dev.coralwombat.appointment.booking.admin;
 
+import java.time.LocalTime;
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ public class SwaggerConfiguration {
 
 	@Bean
 	public Docket docketConfiguration() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
+		return new Docket(DocumentationType.SWAGGER_2).directModelSubstitute(LocalTime.class, String.class).select()
 				.apis(RequestHandlerSelectors.basePackage("dev.coralwombat.appointment.booking.admin.rest")).build()
 				.apiInfo(getApiInfo());
 	}
