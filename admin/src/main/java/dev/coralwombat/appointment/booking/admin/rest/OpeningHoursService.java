@@ -1,15 +1,20 @@
 package dev.coralwombat.appointment.booking.admin.rest;
 
+import java.time.DayOfWeek;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import dev.coralwombat.appointment.booking.dto.OpeningHoursDTO;
 import dev.coralwombat.appointment.booking.entities.Category;
@@ -40,17 +45,30 @@ public class OpeningHoursService {
 		var dbOpeningHours = entityManager.find(OpeningHours.class, id);
 		if (dbOpeningHours == null) {
 			status = HttpStatus.CREATED;
+			dbOpeningHours = new OpeningHours();
 		}
 
-		var entityOpeningHours = new OpeningHours();
-		entityOpeningHours.setCategory(entityManager.find(Category.class, openingHours.getCategory()));
-		entityOpeningHours.setDay(openingHours.getDay());
-		entityOpeningHours.setFrom(openingHours.getFrom());
-		entityOpeningHours.setTo(openingHours.getTo());
-		entityManager.merge(entityOpeningHours);
+		dbOpeningHours.setCategory(entityManager.find(Category.class, openingHours.getCategory()));
+		dbOpeningHours.setDay(openingHours.getDay());
+		dbOpeningHours.setFrom(openingHours.getFrom());
+		dbOpeningHours.setTo(openingHours.getTo());
+		entityManager.persist(dbOpeningHours);
 
 		log.info("OpeningHoursService.put() finished.");
 		return ResponseEntity.status(status).build();
+	}
+
+	@Transactional
+	@DeleteMapping(path = "/delete")
+	@ApiOperation(value = "Deletes an opening hour", notes = "Deletes the given opening hour from the database.")
+	public void delete(
+			@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer categoryId,
+			@ApiParam(required = true, value = "The day of the opening hours to delete.") @RequestParam(required = true) DayOfWeek day) {
+		log.info("OpeningHoursService.delete() called with: categoryId=" + categoryId + ", day=" + day);
+		entityManager.createQuery("DELETE FROM OpeningHours o WHERE o.category = :category AND o.day = :day")
+				.setParameter("category", entityManager.find(Category.class, categoryId)).setParameter("day", day)
+				.executeUpdate();
+		log.info("OpeningHoursService.delete() finished.");
 	}
 
 }

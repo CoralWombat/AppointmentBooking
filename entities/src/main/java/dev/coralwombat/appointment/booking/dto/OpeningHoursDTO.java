@@ -3,6 +3,8 @@ package dev.coralwombat.appointment.booking.dto;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import dev.coralwombat.appointment.booking.entities.OpeningHours;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,10 +34,12 @@ public class OpeningHoursDTO {
 	DayOfWeek day;
 
 	@NonNull
+	@JsonFormat(pattern="HH:mm")
 	@ApiModelProperty(value = "The hour from which the opening is active.")
 	LocalTime from;
 
 	@NonNull
+	@JsonFormat(pattern="HH:mm")
 	@ApiModelProperty(value = "The hour from which the opening is inactive.")
 	LocalTime to;
 

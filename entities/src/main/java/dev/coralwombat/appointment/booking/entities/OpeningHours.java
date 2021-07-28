@@ -29,10 +29,10 @@ public class OpeningHours implements Serializable {
 	@Column(name = "day")
 	DayOfWeek day;
 
-	@Column(name = "fromTime")
+	@Column(name = "from_time")
 	LocalTime from;
 
-	@Column(name = "toTime")
+	@Column(name = "to_time")
 	LocalTime to;
 
 }
