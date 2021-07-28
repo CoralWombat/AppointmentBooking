@@ -45,7 +45,7 @@ public class CategoryService {
 		dbCategory.setId(category.getId());
 		dbCategory.setName(category.getName());
 		dbCategory.setParent(entityManager.find(Category.class, category.getParent()));
-		entityManager.merge(dbCategory);
+		entityManager.persist(dbCategory);
 
 		log.info("CategoryService.put() finished.");
 		return ResponseEntity.status(status).build();
@@ -53,6 +53,7 @@ public class CategoryService {
 
 	@Transactional
 	@DeleteMapping(path = "/delete")
+	@ApiOperation(value = "Deletes a category", notes = "Deletes the category by the fiven id, fails if the category has children.")
 	public void delete(
 			@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer id) {
 		log.info("CategoryService.delete() called with: id=" + id);
