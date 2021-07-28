@@ -12,8 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EntityScan(basePackages = { "dev.coralwombat.appointment.booking.entities" })
 public class ClientServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ClientServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+	SpringApplication.run(ClientServiceApplication.class, args);
+    }
 
 }

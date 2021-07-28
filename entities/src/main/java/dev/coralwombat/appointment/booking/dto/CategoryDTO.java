@@ -14,20 +14,20 @@ import lombok.NonNull;
 @ApiModel(description = "Contains the details of a category.")
 public class CategoryDTO {
 
-	public CategoryDTO(@NonNull Category importEntity) {
-		this.id = importEntity.getId();
-		this.name = importEntity.getName();
-		this.parent = importEntity.getParent() != null ? importEntity.getParent().getId() : null;
-	}
+    public CategoryDTO(@NonNull Category importEntity) {
+	this.id = importEntity.getId();
+	this.name = importEntity.getName();
+	this.parent = importEntity.getParent() != null ? importEntity.getParent().getId() : null;
+    }
 
-	@NonNull
-	@ApiModelProperty(notes = "The ID of the category.")
-	Integer id;
+    @NonNull
+    @ApiModelProperty(notes = "The ID of the category.")
+    Integer id;
 
-	@ApiModelProperty(notes = "The name of the category.")
-	String name;
+    @ApiModelProperty(notes = "The name of the category.")
+    String name;
 
-	@ApiModelProperty(notes = "The ID of the parent of the category.")
-	Integer parent;
+    @ApiModelProperty(notes = "The ID of the parent of the category.")
+    Integer parent;
 
 }

@@ -19,28 +19,28 @@ import lombok.NonNull;
 @ApiModel(description = "Contains the opening hours of a category on a day of the week.")
 public class OpeningHoursDTO {
 
-	public OpeningHoursDTO(OpeningHours importEntity) {
-		this.category = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
-		this.day = importEntity.getDay();
-		this.from = importEntity.getFrom();
-		this.to = importEntity.getTo();
-	}
+    public OpeningHoursDTO(OpeningHours importEntity) {
+	this.category = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
+	this.day = importEntity.getDay();
+	this.from = importEntity.getFrom();
+	this.to = importEntity.getTo();
+    }
 
-	@ApiModelProperty(value = "The ID of the category.")
-	Integer category;
+    @ApiModelProperty(value = "The ID of the category.")
+    Integer category;
 
-	@NonNull
-	@ApiModelProperty(value = "The day of the week.")
-	DayOfWeek day;
+    @NonNull
+    @ApiModelProperty(value = "The day of the week.")
+    DayOfWeek day;
 
-	@NonNull
-	@JsonFormat(pattern="HH:mm")
-	@ApiModelProperty(value = "The hour from which the opening is active.")
-	LocalTime from;
+    @NonNull
+    @JsonFormat(pattern = "HH:mm")
+    @ApiModelProperty(value = "The hour from which the opening is active.")
+    LocalTime from;
 
-	@NonNull
-	@JsonFormat(pattern="HH:mm")
-	@ApiModelProperty(value = "The hour from which the opening is inactive.")
-	LocalTime to;
+    @NonNull
+    @JsonFormat(pattern = "HH:mm")
+    @ApiModelProperty(value = "The hour from which the opening is inactive.")
+    LocalTime to;
 
 }

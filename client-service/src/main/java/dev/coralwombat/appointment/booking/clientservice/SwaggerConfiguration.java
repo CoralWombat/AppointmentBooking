@@ -16,17 +16,24 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-	@Bean
-	public Docket docketConfiguration() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("dev.coralwombat.appointment.booking.clientservice.rest")).build()
-				.apiInfo(getApiInfo());
-	}
+    @Bean
+    public Docket docketConfiguration() {
+	return new Docket(DocumentationType.SWAGGER_2)
+		.select()
+		.apis(RequestHandlerSelectors.basePackage("dev.coralwombat.appointment.booking.clientservice.rest"))
+		.build()
+		.apiInfo(getApiInfo());
+    }
 
-	private ApiInfo getApiInfo() {
-		return new ApiInfo("Appointment Booking API",
-				"Contains all APIs to configure and use a Appointment Booking system.", "1.0", null,
-				new Contact("Kristóf Göncző", null, "kristofgonczo@gmail.com"), null, null, Collections.emptyList());
-	}
+    private ApiInfo getApiInfo() {
+	return new ApiInfo("Appointment Booking API",
+		"Contains all APIs to configure and use a Appointment Booking system.",
+		"1.0",
+		null,
+		new Contact("Kristóf Göncző", null, "kristofgonczo@gmail.com"),
+		null,
+		null,
+		Collections.emptyList());
+    }
 
 }

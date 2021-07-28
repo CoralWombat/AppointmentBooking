@@ -22,8 +22,8 @@ public class OpeningHoursController {
     @PersistenceContext
     EntityManager entityManager;
 
-    public OpeningHoursDTO getOpeningHours(@NonNull Integer categoryId, @NonNull DayOfWeek day)
-	    throws AppointmentBookingException {
+    public OpeningHoursDTO getOpeningHours(@NonNull Integer categoryId,
+	    @NonNull DayOfWeek day) throws AppointmentBookingException {
 
 	var category = entityManager.find(Category.class, categoryId);
 	if (category == null)
@@ -47,8 +47,7 @@ public class OpeningHoursController {
 	} while (openingHours == null && category != null);
 
 	if (openingHours == null)
-	    throw new AppointmentBookingException(
-		    "Opening hours not found for category: " + categoryId + " on day: " + day, null);
+	    throw new AppointmentBookingException("Opening hours not found for category: " + categoryId + " on day: " + day, null);
 
 	return new OpeningHoursDTO(openingHours);
     }

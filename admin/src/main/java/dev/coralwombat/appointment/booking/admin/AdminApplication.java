@@ -15,9 +15,9 @@ import org.springframework.context.annotation.ComponentScan;
 @EntityScan(basePackages = { "dev.coralwombat.appointment.booking.entities" })
 public class AdminApplication {
 
-	public static void main(String[] args) throws SQLException {
-        Server.createTcpServer().start();
-		SpringApplication.run(AdminApplication.class, args);
-	}
+    public static void main(String[] args) throws SQLException {
+	Server.createTcpServer().start();
+	SpringApplication.run(AdminApplication.class, args);
+    }
 
 }

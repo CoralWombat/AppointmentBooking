@@ -25,46 +25,52 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/category")
 public class CategoryService {
 
-	@PersistenceContext
-	EntityManager entityManager;
+    @PersistenceContext
+    EntityManager entityManager;
 
-	@Transactional
-	@PutMapping(path = "/put")
-	@ApiOperation(value = "Puts a category into the database", notes = "Puts the given category into the database. If the category already exists it updates it. If the parent does not exist, the created category will be a root category.")
-	public ResponseEntity<Object> put(
-			@ApiParam(required = true, value = "The category to insert or update.") @RequestBody(required = true) CategoryDTO category) {
-		log.info("CategoryService.put() called with: category=" + category.toString() + ".");
-		HttpStatus status = HttpStatus.OK;
+    @Transactional
+    @PutMapping(path = "/put")
+    @ApiOperation(value = "Puts a category into the database",
+	    notes = "Puts the given category into the database. If the category already exists it updates it. If the parent does not exist, the created category will be a root category.")
+    public ResponseEntity<Object> put(@ApiParam(required = true, value = "The category to insert or update.") @RequestBody(required = true) CategoryDTO category) {
+	log.info("CategoryService.put() called with: category=" + category.toString() + ".");
+	HttpStatus status = HttpStatus.OK;
 
-		var dbCategory = entityManager.find(Category.class, category.getId());
-		if (dbCategory == null) {
-			status = HttpStatus.CREATED;
-			dbCategory = new Category();
-		}
-
-		dbCategory.setId(category.getId());
-		dbCategory.setName(category.getName());
-		dbCategory.setParent(entityManager.find(Category.class, category.getParent()));
-		entityManager.persist(dbCategory);
-
-		log.info("CategoryService.put() finished.");
-		return ResponseEntity.status(status).build();
+	var dbCategory = entityManager.find(Category.class, category.getId());
+	if (dbCategory == null) {
+	    status = HttpStatus.CREATED;
+	    dbCategory = new Category();
 	}
 
-	@Transactional
-	@DeleteMapping(path = "/delete")
-	@ApiOperation(value = "Deletes a category", notes = "Deletes the category by the fiven id, fails if the category has children.")
-	public void delete(
-			@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer id) {
-		log.info("CategoryService.delete() called with: id=" + id);
-		boolean hasChildren = !entityManager
-				.createQuery("SELECT c FROM Category c WHERE c.parent = :parentId", Category.class)
-				.setParameter("parentId", entityManager.find(Category.class, id)).getResultList().isEmpty();
-		if (hasChildren)
-			throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Children found. id=" + id);
+	dbCategory.setId(category.getId());
+	dbCategory.setName(category.getName());
+	dbCategory.setParent(entityManager.find(Category.class, category.getParent()));
+	entityManager.persist(dbCategory);
 
-		entityManager.createQuery("DELETE FROM Category c WHERE c.id = :id").setParameter("id", id).executeUpdate();
-		log.info("CategoryService.delete() finished.");
-	}
+	log.info("CategoryService.put() finished.");
+	return ResponseEntity.status(status).build();
+    }
+
+    @Transactional
+    @DeleteMapping(path = "/delete")
+    @ApiOperation(value = "Deletes a category",
+	    notes = "Deletes the category by the fiven id, fails if the category has children.")
+    public void delete(@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer id) {
+	log.info("CategoryService.delete() called with: id=" + id);
+
+	boolean hasChildren = !entityManager
+		.createQuery("SELECT c FROM Category c WHERE c.parent = :parentId", Category.class)
+		.setParameter("parentId", entityManager.find(Category.class, id))
+		.getResultList()
+		.isEmpty();
+
+	if (hasChildren)
+	    throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Children found. id=" + id);
+
+	entityManager.createQuery("DELETE FROM Category c WHERE c.id = :id")
+		.setParameter("id", id)
+		.executeUpdate();
+	log.info("CategoryService.delete() finished.");
+    }
 
 }
