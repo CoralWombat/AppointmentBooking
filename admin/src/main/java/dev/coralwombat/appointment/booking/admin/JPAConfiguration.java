@@ -29,7 +29,7 @@ public class JPAConfiguration {
 
     Properties additionalProperties() {
 	var properties = new Properties();
-	properties.setProperty("hibernate.hbm2ddl.auto", "update");
+	properties.setProperty("hibernate.hbm2ddl.auto", "create");
 	properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 
 	return properties;

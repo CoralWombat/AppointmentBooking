@@ -1,7 +1,7 @@
 package dev.coralwombat.appointment.booking.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,33 +19,24 @@ import lombok.Data;
 @Data
 public class Reservation implements Serializable {
 
-	private static final long serialVersionUID = 1734552087612247006L;
+    private static final long serialVersionUID = 1734552087612247006L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    Integer id;
 
-	@ManyToOne
-	@JoinColumn(name = "category_id", nullable = true)
-	Category category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    Category category;
 
-	@Column(name = "fromDate")
-	LocalDate from;
+    @Column(name = "from_time")
+    LocalDateTime from;
 
-	@Column(name = "toDate")
-	LocalDate to;
+    @Column(name = "to_time")
+    LocalDateTime to;
 
-	@Column(name = "customerName")
-	String customerName;
-
-	@Column(name = "customerPhone")
-	String customerPhone;
-
-	@Column(name = "customerEmail")
-	String customerEmail;
-
-	@Column(name = "notificationSend")
-	Boolean notificationSend;
+    @Column(name = "customer_id")
+    String customerId;
 
 }

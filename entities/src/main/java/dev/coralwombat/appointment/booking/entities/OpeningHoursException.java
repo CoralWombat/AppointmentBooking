@@ -1,7 +1,7 @@
 package dev.coralwombat.appointment.booking.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,10 +30,10 @@ public class OpeningHoursException implements Serializable {
 	@JoinColumn(name = "category_id", nullable = true)
 	Category category;
 
-	@Column(name = "fromDate")
-	LocalDate from;
+	@Column(name = "from_date")
+	LocalDateTime from;
 
-	@Column(name = "toDate")
-	LocalDate to;
+	@Column(name = "to_date")
+	LocalDateTime to;
 
 }
