@@ -55,7 +55,7 @@ public class CategoryService {
     @DeleteMapping(path = "/delete")
     @ApiOperation(value = "Deletes a category",
 	    notes = "Deletes the category by the fiven id, fails if the category has children.")
-    public void delete(@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer id) {
+    public ResponseEntity<Object> delete(@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer id) {
 	log.info("CategoryService.delete() called with: id=" + id);
 
 	boolean hasChildren = !entityManager
@@ -71,6 +71,7 @@ public class CategoryService {
 		.setParameter("id", id)
 		.executeUpdate();
 	log.info("CategoryService.delete() finished.");
+	return ResponseEntity.ok().build();
     }
 
 }

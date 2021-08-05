@@ -61,7 +61,7 @@ public class OpeningHoursService {
     @DeleteMapping(path = "/delete")
     @ApiOperation(value = "Deletes an opening hour",
 	    notes = "Deletes the given opening hour from the database.")
-    public void delete(@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer categoryId,
+    public ResponseEntity<Object> delete(@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer categoryId,
 	    @ApiParam(required = true, value = "The day of the opening hours to delete.") @RequestParam(required = true) DayOfWeek day) {
 	log.info("OpeningHoursService.delete() called with: categoryId=" + categoryId + ", day=" + day);
 
@@ -71,6 +71,7 @@ public class OpeningHoursService {
 		.executeUpdate();
 
 	log.info("OpeningHoursService.delete() finished.");
+	return ResponseEntity.ok().build();
     }
 
 }
