@@ -29,6 +29,9 @@ public class Category implements Serializable {
     @Column(name = "name")
     String name;
 
+    @Column(name = "lenght")
+    Integer lenght;
+
     @JoinColumn(name = "parent_id", nullable = true)
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     Category parent;

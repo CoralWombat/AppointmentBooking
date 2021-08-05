@@ -27,6 +27,9 @@ public class CategoryDTO {
     @ApiModelProperty(notes = "The name of the category.")
     String name;
 
+    @ApiModelProperty(notes = "The time length of the category (service) in minutes.")
+    Integer lenght;
+
     @ApiModelProperty(notes = "The ID of the parent of the category.")
     Integer parent;
 
