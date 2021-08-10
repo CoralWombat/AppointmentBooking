@@ -20,6 +20,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 
+import java.time.DayOfWeek;
+
 @Log4j2
 @RestController
 @RequestMapping("/openingHoursException")
@@ -31,33 +33,33 @@ public class OpeningHoursExceptionService {
     @Transactional
     @PostMapping(path = "/post")
     @ApiOperation(value = "Puts an opening hour exception into the database",
-	    notes = "Puts the given opening hour into the database.")
+            notes = "Puts the given opening hour into the database.")
     public ResponseEntity<Object> post(@ApiParam(required = true, value = "The opening hours exception to insert.") @RequestBody(required = true) OpeningHoursExceptionDTO openingHoursException) {
-	log.info("OpeningHoursExceptionService.post() called with: openingHoursException=" + openingHoursException.toString() + ".");
+        log.info("OpeningHoursExceptionService.post() called with: openingHoursException=" + openingHoursException.toString() + ".");
 
-	var dbOpeningHoursException = new OpeningHoursException();
-	dbOpeningHoursException.setCategory(entityManager.find(Category.class, openingHoursException.getCategoryId()));
-	dbOpeningHoursException.setFrom(openingHoursException.getFrom());
-	dbOpeningHoursException.setTo(openingHoursException.getTo());
-	entityManager.persist(dbOpeningHoursException);
+        var dbOpeningHoursException = new OpeningHoursException();
+        dbOpeningHoursException.setCategory(entityManager.find(Category.class, openingHoursException.getCategoryId()));
+        dbOpeningHoursException.setFrom(openingHoursException.getFrom());
+        dbOpeningHoursException.setTo(openingHoursException.getTo());
+        entityManager.persist(dbOpeningHoursException);
 
-	log.info("OpeningHoursExceptionService.post() finished.");
-	return ResponseEntity.status(HttpStatus.CREATED).build();
+        log.info("OpeningHoursExceptionService.post() finished.");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Transactional
     @DeleteMapping(path = "/delete")
     @ApiOperation(value = "Deletes an opening hour exception from the database",
-	    notes = "Deletes the given opening hour from the database.")
+            notes = "Deletes the given opening hour from the database.")
     public ResponseEntity<Object> delete(@ApiParam(required = true, value = "The id of the exception to delete.") @RequestParam(required = true) Integer id) {
-	log.info("OpeningHoursExceptionService.delete() called with: id=" + id + ".");
+        log.info("OpeningHoursExceptionService.delete() called with: id=" + id + ".");
 
-	entityManager.createQuery("DELETE FROM OpeningHoursExceptuion o WHERE o.id = :id")
-		.setParameter("id", id)
-		.executeUpdate();
+        entityManager.createQuery("DELETE FROM OpeningHoursException o WHERE o.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
 
-	log.info("OpeningHoursExceptionService.delete() finished.");
-	return ResponseEntity.ok().build();
+        log.info("OpeningHoursExceptionService.delete() finished.");
+        return ResponseEntity.ok().build();
     }
 
 }

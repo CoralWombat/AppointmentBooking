@@ -22,8 +22,7 @@ public class Category implements Serializable {
     private static final long serialVersionUID = -5229059936348972714L;
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     Integer id;
 
     @Column(name = "name")

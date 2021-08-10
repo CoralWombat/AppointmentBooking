@@ -33,45 +33,49 @@ public class OpeningHoursService {
     @Transactional
     @PutMapping(path = "/put")
     @ApiOperation(value = "Puts an opening hour into the database",
-	    notes = "Puts the given opening hour into the database. If the opening hour already exists it updates it.")
+            notes = "Puts the given opening hour into the database. If the opening hour already exists it updates it.")
     public ResponseEntity<Object> put(@ApiParam(required = true, value = "The opening hours to insert or update.") @RequestBody(required = true) OpeningHoursDTO openingHours) {
-	log.info("OpeningHoursService.put() called with: openingHours=" + openingHours.toString() + ".");
-	HttpStatus status = HttpStatus.OK;
+        log.info("OpeningHoursService.put() called with: openingHours=" + openingHours.toString() + ".");
+        HttpStatus status = HttpStatus.OK;
 
-	var id = new OpeningHours();
-	id.setCategory(entityManager.find(Category.class, openingHours.getCategory()));
-	id.setDay(openingHours.getDay());
-	var dbOpeningHours = entityManager.find(OpeningHours.class, id);
-	if (dbOpeningHours == null) {
-	    status = HttpStatus.CREATED;
-	    dbOpeningHours = new OpeningHours();
-	}
+        var id = new OpeningHours();
+        id.setCategory(entityManager.find(Category.class, openingHours.getCategory()));
+        id.setDay(openingHours.getDay());
+        var dbOpeningHours = entityManager.find(OpeningHours.class, id);
+        if (dbOpeningHours == null) {
+            status = HttpStatus.CREATED;
+            dbOpeningHours = new OpeningHours();
+        }
 
-	dbOpeningHours.setCategory(entityManager.find(Category.class, openingHours.getCategory()));
-	dbOpeningHours.setDay(openingHours.getDay());
-	dbOpeningHours.setFrom(openingHours.getFrom());
-	dbOpeningHours.setTo(openingHours.getTo());
-	entityManager.persist(dbOpeningHours);
+        dbOpeningHours.setCategory(entityManager.find(Category.class, openingHours.getCategory()));
+        dbOpeningHours.setDay(openingHours.getDay());
+        dbOpeningHours.setFrom(openingHours.getFrom());
+        dbOpeningHours.setTo(openingHours.getTo());
+        if (status == HttpStatus.CREATED) {
+            entityManager.persist(dbOpeningHours);
+        } else {
+            entityManager.merge(dbOpeningHours);
+        }
 
-	log.info("OpeningHoursService.put() finished.");
-	return ResponseEntity.status(status).build();
+        log.info("OpeningHoursService.put() finished.");
+        return ResponseEntity.status(status).build();
     }
 
     @Transactional
     @DeleteMapping(path = "/delete")
     @ApiOperation(value = "Deletes an opening hour",
-	    notes = "Deletes the given opening hour from the database.")
+            notes = "Deletes the given opening hour from the database.")
     public ResponseEntity<Object> delete(@ApiParam(required = true, value = "The ID of the category to delete.") @RequestParam(required = true) Integer categoryId,
-	    @ApiParam(required = true, value = "The day of the opening hours to delete.") @RequestParam(required = true) DayOfWeek day) {
-	log.info("OpeningHoursService.delete() called with: categoryId=" + categoryId + ", day=" + day);
+                                         @ApiParam(required = true, value = "The day of the opening hours to delete.") @RequestParam(required = true) DayOfWeek day) {
+        log.info("OpeningHoursService.delete() called with: categoryId=" + categoryId + ", day=" + day);
 
-	entityManager.createQuery("DELETE FROM OpeningHours o WHERE o.category = :category AND o.day = :day")
-		.setParameter("category", entityManager.find(Category.class, categoryId))
-		.setParameter("day", day)
-		.executeUpdate();
+        entityManager.createQuery("DELETE FROM OpeningHours o WHERE o.category = :category AND o.day = :day")
+                .setParameter("category", entityManager.find(Category.class, categoryId))
+                .setParameter("day", day)
+                .executeUpdate();
 
-	log.info("OpeningHoursService.delete() finished.");
-	return ResponseEntity.ok().build();
+        log.info("OpeningHoursService.delete() finished.");
+        return ResponseEntity.ok().build();
     }
 
 }
