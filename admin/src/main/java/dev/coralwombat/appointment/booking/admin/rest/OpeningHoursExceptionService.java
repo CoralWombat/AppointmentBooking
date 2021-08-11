@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.coralwombat.appointment.booking.dto.OpeningHoursExceptionDTO;
+import dev.coralwombat.appointment.booking.dto.OpeningHoursDropoutDTO;
 import dev.coralwombat.appointment.booking.entities.Category;
-import dev.coralwombat.appointment.booking.entities.OpeningHoursException;
+import dev.coralwombat.appointment.booking.entities.OpeningHoursDropout;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
-
-import java.time.DayOfWeek;
 
 @Log4j2
 @RestController
@@ -34,10 +32,10 @@ public class OpeningHoursExceptionService {
     @PostMapping(path = "/post")
     @ApiOperation(value = "Puts an opening hour exception into the database",
             notes = "Puts the given opening hour into the database.")
-    public ResponseEntity<Object> post(@ApiParam(required = true, value = "The opening hours exception to insert.") @RequestBody(required = true) OpeningHoursExceptionDTO openingHoursException) {
+    public ResponseEntity<Object> post(@ApiParam(required = true, value = "The opening hours exception to insert.") @RequestBody(required = true) OpeningHoursDropoutDTO openingHoursException) {
         log.info("OpeningHoursExceptionService.post() called with: openingHoursException=" + openingHoursException.toString() + ".");
 
-        var dbOpeningHoursException = new OpeningHoursException();
+        var dbOpeningHoursException = new OpeningHoursDropout();
         dbOpeningHoursException.setCategory(entityManager.find(Category.class, openingHoursException.getCategoryId()));
         dbOpeningHoursException.setFrom(openingHoursException.getFrom());
         dbOpeningHoursException.setTo(openingHoursException.getTo());
@@ -54,7 +52,7 @@ public class OpeningHoursExceptionService {
     public ResponseEntity<Object> delete(@ApiParam(required = true, value = "The id of the exception to delete.") @RequestParam(required = true) Integer id) {
         log.info("OpeningHoursExceptionService.delete() called with: id=" + id + ".");
 
-        entityManager.createQuery("DELETE FROM OpeningHoursException o WHERE o.id = :id")
+        entityManager.createQuery("DELETE FROM OpeningHoursDropout o WHERE o.id = :id")
                 .setParameter("id", id)
                 .executeUpdate();
 

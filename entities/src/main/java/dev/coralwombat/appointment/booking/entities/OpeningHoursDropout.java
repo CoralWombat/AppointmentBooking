@@ -17,7 +17,7 @@ import lombok.Data;
 @Entity
 @Table(name = "opening_hours_exception")
 @Data
-public class OpeningHoursException implements Serializable {
+public class OpeningHoursDropout implements Serializable {
 
     private static final long serialVersionUID = -1592489058864784896L;
 

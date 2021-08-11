@@ -2,7 +2,7 @@ package dev.coralwombat.appointment.booking.dto;
 
 import java.time.LocalDateTime;
 
-import dev.coralwombat.appointment.booking.entities.OpeningHoursException;
+import dev.coralwombat.appointment.booking.entities.OpeningHoursDropout;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -14,9 +14,9 @@ import lombok.NonNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "Contains an exception in the opening hours of a category.")
-public class OpeningHoursExceptionDTO {
+public class OpeningHoursDropoutDTO {
 
-    public OpeningHoursExceptionDTO(OpeningHoursException importEntity) {
+    public OpeningHoursDropoutDTO(OpeningHoursDropout importEntity) {
         this.id = importEntity.getId();
         this.categoryId = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
         this.from = importEntity.getFrom();
