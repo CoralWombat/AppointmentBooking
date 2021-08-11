@@ -17,11 +17,11 @@ import lombok.NonNull;
 public class ReservationDTO {
 
     public ReservationDTO(Reservation importEntity) {
-	this.id = importEntity.getId();
-	this.category = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
-	this.from = importEntity.getFrom();
-	this.to = importEntity.getTo();
-	this.customerId = importEntity.getCustomerId();
+        this.id = importEntity.getId();
+        this.category = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
+        this.from = importEntity.getFrom();
+        this.to = importEntity.getTo();
+        this.customerId = importEntity.getCustomerId();
     }
 
     @ApiModelProperty(value = "The identifier of the reservation.")

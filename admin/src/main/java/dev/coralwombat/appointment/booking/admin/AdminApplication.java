@@ -12,12 +12,12 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = "dev.coralwombat.appointment.booking.admin")
 @EnableConfigurationProperties
-@EntityScan(basePackages = { "dev.coralwombat.appointment.booking.entities" })
+@EntityScan(basePackages = {"dev.coralwombat.appointment.booking.entities"})
 public class AdminApplication {
 
     public static void main(String[] args) throws SQLException {
-	Server.createTcpServer().start();
-	SpringApplication.run(AdminApplication.class, args);
+        Server.createTcpServer().start();
+        SpringApplication.run(AdminApplication.class, args);
     }
 
 }

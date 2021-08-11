@@ -34,26 +34,26 @@ public class OpeningHoursService {
 
     @GetMapping(path = "/get")
     @ApiOperation(value = "Gets the opening hours for the given category",
-	    notes = "Retrieves the opening hours from the database.")
+            notes = "Retrieves the opening hours from the database.")
     public ResponseEntity<Map<DayOfWeek, OpeningHoursDTO>> get(@ApiParam(required = true, value = "The id of the category.") @RequestParam(required = true) Integer categoryId,
-	    @ApiParam(required = false, value = "The day.") @RequestParam(required = false) DayOfWeek day) throws AppointmentBookingException {
-	log.info("OpeningHoursService.get() called with: categoryId=" + categoryId + ", day=" + day + ".");
+                                                               @ApiParam(required = false, value = "The day.") @RequestParam(required = false) DayOfWeek day) throws AppointmentBookingException {
+        log.info("OpeningHoursService.get() called with: categoryId=" + categoryId + ", day=" + day + ".");
 
-	Map<DayOfWeek, OpeningHoursDTO> openingHourses = new EnumMap<>(DayOfWeek.class);
-	if (day != null) {
-	    openingHourses.put(day, openingHoursController.getOpeningHours(categoryId, day));
-	} else {
-	    for (DayOfWeek currentDay : DayOfWeek.values()) {
-		try {
-		    openingHourses.put(currentDay, openingHoursController.getOpeningHours(categoryId, currentDay));
-		} catch (AppointmentBookingException e) {
-		    log.trace(e.getMessage());
-		}
-	    }
-	}
+        Map<DayOfWeek, OpeningHoursDTO> openingHourses = new EnumMap<>(DayOfWeek.class);
+        if (day != null) {
+            openingHourses.put(day, openingHoursController.getOpeningHours(categoryId, day));
+        } else {
+            for (DayOfWeek currentDay : DayOfWeek.values()) {
+                try {
+                    openingHourses.put(currentDay, openingHoursController.getOpeningHours(categoryId, currentDay));
+                } catch (AppointmentBookingException e) {
+                    log.trace(e.getMessage());
+                }
+            }
+        }
 
-	log.info("OpeningHoursService.get() returned with: " + openingHourses.toString());
-	return ResponseEntity.ok(openingHourses);
+        log.info("OpeningHoursService.get() returned with: " + openingHourses.toString());
+        return ResponseEntity.ok(openingHourses);
     }
 
 }

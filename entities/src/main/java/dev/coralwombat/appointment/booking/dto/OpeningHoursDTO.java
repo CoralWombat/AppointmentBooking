@@ -20,10 +20,10 @@ import lombok.NonNull;
 public class OpeningHoursDTO {
 
     public OpeningHoursDTO(OpeningHours importEntity) {
-	this.category = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
-	this.day = importEntity.getDay();
-	this.from = importEntity.getFrom();
-	this.to = importEntity.getTo();
+        this.category = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
+        this.day = importEntity.getDay();
+        this.from = importEntity.getFrom();
+        this.to = importEntity.getTo();
     }
 
     @ApiModelProperty(value = "The ID of the category.")

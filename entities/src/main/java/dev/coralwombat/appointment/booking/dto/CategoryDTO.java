@@ -15,9 +15,9 @@ import lombok.NonNull;
 public class CategoryDTO {
 
     public CategoryDTO(@NonNull Category importEntity) {
-	this.id = importEntity.getId();
-	this.name = importEntity.getName();
-	this.parent = importEntity.getParent() != null ? importEntity.getParent().getId() : null;
+        this.id = importEntity.getId();
+        this.name = importEntity.getName();
+        this.parent = importEntity.getParent() != null ? importEntity.getParent().getId() : null;
     }
 
     @NonNull

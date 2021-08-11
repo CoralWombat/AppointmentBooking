@@ -17,10 +17,10 @@ import lombok.NonNull;
 public class OpeningHoursExceptionDTO {
 
     public OpeningHoursExceptionDTO(OpeningHoursException importEntity) {
-	this.id = importEntity.getId();
-	this.categoryId = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
-	this.from = importEntity.getFrom();
-	this.to = importEntity.getTo();
+        this.id = importEntity.getId();
+        this.categoryId = importEntity.getCategory() != null ? importEntity.getCategory().getId() : null;
+        this.from = importEntity.getFrom();
+        this.to = importEntity.getTo();
     }
 
     @ApiModelProperty(value = "The identifier of the exception.")

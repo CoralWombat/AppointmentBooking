@@ -13,12 +13,12 @@ public class JPAConfiguration {
 
     @Bean
     public DataSource dataSource() {
-	var dataSource = new DriverManagerDataSource();
+        var dataSource = new DriverManagerDataSource();
 
-	dataSource.setUsername("testuser");
-	dataSource.setPassword("testpass");
-	dataSource.setUrl("jdbc:h2:tcp://localhost/./database");
+        dataSource.setUsername("testuser");
+        dataSource.setPassword("testpass");
+        dataSource.setUrl("jdbc:h2:tcp://localhost/./database");
 
-	return dataSource;
+        return dataSource;
     }
 }

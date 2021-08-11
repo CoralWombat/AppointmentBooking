@@ -30,26 +30,26 @@ public class OpeningHoursExceptionService {
 
     @GetMapping(path = "/get")
     @ApiOperation(value = "Gets all exceptions of a category.",
-	    notes = "Retrieves all opening hours exceptions of a category and its parents.")
+            notes = "Retrieves all opening hours exceptions of a category and its parents.")
     public ResponseEntity<Collection<OpeningHoursExceptionDTO>> get(@ApiParam(required = true, value = "The identifier of the category.") @RequestParam(required = true) Integer categoryId) {
-	log.info("OpeningHoursExceptionService.get() called with: categoryId=" + categoryId + ".");
-	Collection<OpeningHoursExceptionDTO> exceptions = new LinkedList<>();
+        log.info("OpeningHoursExceptionService.get() called with: categoryId=" + categoryId + ".");
+        Collection<OpeningHoursExceptionDTO> exceptions = new LinkedList<>();
 
-	var category = entityManager.find(Category.class, categoryId);
-	while (category != null) {
-	    List<OpeningHoursException> dbExceptions = entityManager.createQuery("SELECT o FROM OpeningHoursException o WHERE o.category = :category", OpeningHoursException.class)
-		    .setParameter("category", category)
-		    .getResultList();
+        var category = entityManager.find(Category.class, categoryId);
+        while (category != null) {
+            List<OpeningHoursException> dbExceptions = entityManager.createQuery("SELECT o FROM OpeningHoursException o WHERE o.category = :category", OpeningHoursException.class)
+                    .setParameter("category", category)
+                    .getResultList();
 
-	    for (OpeningHoursException dbException : dbExceptions) {
-		exceptions.add(new OpeningHoursExceptionDTO(dbException));
-	    }
+            for (OpeningHoursException dbException : dbExceptions) {
+                exceptions.add(new OpeningHoursExceptionDTO(dbException));
+            }
 
-	    category = category.getParent() != null ? entityManager.find(Category.class, category.getParent().getId()) : null;
-	}
+            category = category.getParent() != null ? entityManager.find(Category.class, category.getParent().getId()) : null;
+        }
 
-	log.info("OpeningHoursExceptionService.get() returned with: " + exceptions.toString() + ".");
-	return ResponseEntity.ok(exceptions);
+        log.info("OpeningHoursExceptionService.get() returned with: " + exceptions.toString() + ".");
+        return ResponseEntity.ok(exceptions);
     }
 
 }

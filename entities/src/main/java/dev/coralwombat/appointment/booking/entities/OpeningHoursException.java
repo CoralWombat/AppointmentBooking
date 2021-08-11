@@ -19,21 +19,21 @@ import lombok.Data;
 @Data
 public class OpeningHoursException implements Serializable {
 
-	private static final long serialVersionUID = -1592489058864784896L;
+    private static final long serialVersionUID = -1592489058864784896L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    Integer id;
 
-	@ManyToOne
-	@JoinColumn(name = "category_id", nullable = true)
-	Category category;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = true)
+    Category category;
 
-	@Column(name = "from_date")
-	LocalDateTime from;
+    @Column(name = "from_date")
+    LocalDateTime from;
 
-	@Column(name = "to_date")
-	LocalDateTime to;
+    @Column(name = "to_date")
+    LocalDateTime to;
 
 }

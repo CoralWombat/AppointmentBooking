@@ -19,22 +19,22 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket docketConfiguration() {
-	return new Docket(DocumentationType.SWAGGER_2)
-		.directModelSubstitute(LocalTime.class, String.class)
-		.select()
-		.apis(RequestHandlerSelectors.basePackage("dev.coralwombat.appointment.booking.admin.rest"))
-		.build()
-		.apiInfo(getApiInfo());
+        return new Docket(DocumentationType.SWAGGER_2)
+                .directModelSubstitute(LocalTime.class, String.class)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("dev.coralwombat.appointment.booking.admin.rest"))
+                .build()
+                .apiInfo(getApiInfo());
     }
 
     private ApiInfo getApiInfo() {
-	return new ApiInfo("Appointment Booking API",
-		"Contains all APIs to configure and use a Appointment Booking system.",
-		"1.0",
-		null,
-		new Contact("Kristóf Göncző", null, "kristofgonczo@gmail.com"),
-		null,
-		null, Collections.emptyList());
+        return new ApiInfo("Appointment Booking API",
+                "Contains all APIs to configure and use a Appointment Booking system.",
+                "1.0",
+                null,
+                new Contact("Kristóf Göncző", null, "kristofgonczo@gmail.com"),
+                null,
+                null, Collections.emptyList());
     }
 
 }

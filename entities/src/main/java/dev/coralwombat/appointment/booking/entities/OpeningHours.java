@@ -18,21 +18,21 @@ import lombok.Data;
 @Data
 public class OpeningHours implements Serializable {
 
-	private static final long serialVersionUID = -8928316118076792489L;
+    private static final long serialVersionUID = -8928316118076792489L;
 
-	@Id
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "category_id", nullable = false)
-	Category category;
+    @Id
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    Category category;
 
-	@Id
-	@Column(name = "day")
-	DayOfWeek day;
+    @Id
+    @Column(name = "day")
+    DayOfWeek day;
 
-	@Column(name = "from_time")
-	LocalTime from;
+    @Column(name = "from_time")
+    LocalTime from;
 
-	@Column(name = "to_time")
-	LocalTime to;
+    @Column(name = "to_time")
+    LocalTime to;
 
 }
