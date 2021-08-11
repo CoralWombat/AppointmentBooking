@@ -23,7 +23,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<project.version>1.0.0</project.version>
+		<project.version>1.0.1</project.version>
 	</properties>
 
 	<dependencyManagement>
