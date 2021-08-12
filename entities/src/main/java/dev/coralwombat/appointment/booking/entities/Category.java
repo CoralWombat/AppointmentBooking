@@ -23,6 +23,7 @@ public class Category implements Serializable {
     Integer id;
 
     @Column(name = "name")
+    @Nationalized
     String name;
 
     @Column(name = "length")

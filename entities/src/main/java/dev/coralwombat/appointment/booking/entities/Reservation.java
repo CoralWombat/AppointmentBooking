@@ -35,6 +35,7 @@ public class Reservation implements Serializable {
     LocalDateTime to;
 
     @Column(name = "customer_id")
+    @Nationalized
     String customerId;
 
     @Override
