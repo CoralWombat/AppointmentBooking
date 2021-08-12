@@ -35,7 +35,7 @@ public class CategoryService {
         log.info("CategoryService.getAll() called.");
 
         Collection<Category> entityCategories = entityManager
-                .createQuery("FROM Category c", Category.class)
+                .createQuery("SELECT c FROM Category c", Category.class)
                 .getResultList();
 
         Collection<CategoryDTO> categories = new LinkedList<>();
