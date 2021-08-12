@@ -1,22 +1,19 @@
 package dev.coralwombat.appointment.booking.entities;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import lombok.Data;
+import java.util.Objects;
 
 @Entity
 @Table(name = "opening_hours_exception")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class OpeningHoursDropout implements Serializable {
 
     private static final long serialVersionUID = -1592489058864784896L;
@@ -27,7 +24,7 @@ public class OpeningHoursDropout implements Serializable {
     Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = true)
+    @JoinColumn(name = "category_id")
     Category category;
 
     @Column(name = "from_date")
@@ -36,4 +33,17 @@ public class OpeningHoursDropout implements Serializable {
     @Column(name = "to_date")
     LocalDateTime to;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        OpeningHoursDropout that = (OpeningHoursDropout) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 2068549604;
+    }
 }

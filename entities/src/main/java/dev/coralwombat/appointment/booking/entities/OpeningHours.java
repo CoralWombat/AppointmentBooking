@@ -1,21 +1,20 @@
 package dev.coralwombat.appointment.booking.entities;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import lombok.Data;
+import java.util.Objects;
 
 @Entity
 @Table(name = "opening_hours")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class OpeningHours implements Serializable {
 
     private static final long serialVersionUID = -8928316118076792489L;
@@ -35,4 +34,17 @@ public class OpeningHours implements Serializable {
     @Column(name = "to_time")
     LocalTime to;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        OpeningHours that = (OpeningHours) o;
+
+        return Objects.equals(category, that.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1889357066;
+    }
 }
