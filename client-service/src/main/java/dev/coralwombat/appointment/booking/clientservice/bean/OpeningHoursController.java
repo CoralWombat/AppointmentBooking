@@ -17,11 +17,15 @@ import java.time.DayOfWeek;
 @Controller
 public class OpeningHoursController {
 
-    @Autowired
+    CategoryRepository categoryRepository;
+
     OpeningHoursRepository openingHoursRepository;
 
     @Autowired
-    CategoryRepository categoryRepository;
+    public OpeningHoursController(CategoryRepository categoryRepository, OpeningHoursRepository openingHoursRepository) {
+        this.categoryRepository = categoryRepository;
+        this.openingHoursRepository = openingHoursRepository;
+    }
 
     /**
      * Looks for the OpeningHours of a category, and it's ancestors on a given day.

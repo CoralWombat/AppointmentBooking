@@ -22,8 +22,12 @@ import java.util.Map;
 @RequestMapping("/openingHours")
 public class OpeningHoursService {
 
-    @Autowired
     OpeningHoursController openingHoursController;
+
+    @Autowired
+    public OpeningHoursService(OpeningHoursController openingHoursController) {
+        this.openingHoursController = openingHoursController;
+    }
 
     @GetMapping(path = "/get")
     @ApiOperation(value = "Gets the opening hours for the given category",
