@@ -12,18 +12,12 @@ import javax.persistence.PersistenceContext;
 
 @Log4j2
 @Repository
-public class CategoryRepository {
+public class CategoryRepository implements ICategoryRepository {
 
     @PersistenceContext
     EntityManager entityManager;
 
-    /**
-     * Runs a select to retrieve the Category with the given id.
-     *
-     * @param id - The id of the category that is looked for.
-     * @return The CategoryDTO with the id from the input.
-     * @throws NoResultException when there is no Category with the given id.
-     */
+    @Override
     public CategoryDTO getCategory(@NonNull Integer id) throws NoResultException {
         Category category = entityManager.find(Category.class, id);
         if (category == null) throw new NoResultException("Category not found for id: " + id);

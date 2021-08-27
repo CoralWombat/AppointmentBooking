@@ -1,8 +1,8 @@
 package dev.coralwombat.appointment.booking.clientservice.bean;
 
 import dev.coralwombat.appointment.booking.clientservice.exception.AppointmentBookingException;
-import dev.coralwombat.appointment.booking.clientservice.repository.CategoryRepository;
-import dev.coralwombat.appointment.booking.clientservice.repository.OpeningHoursRepository;
+import dev.coralwombat.appointment.booking.clientservice.repository.ICategoryRepository;
+import dev.coralwombat.appointment.booking.clientservice.repository.IOpeningHoursRepository;
 import dev.coralwombat.appointment.booking.dto.CategoryDTO;
 import dev.coralwombat.appointment.booking.dto.OpeningHoursDTO;
 import lombok.NonNull;
@@ -15,26 +15,18 @@ import java.time.DayOfWeek;
 
 @Log4j2
 @Controller
-public class OpeningHoursController {
+public class OpeningHoursController implements IOpeningHoursController{
 
-    CategoryRepository categoryRepository;
+    ICategoryRepository categoryRepository;
 
-    OpeningHoursRepository openingHoursRepository;
+    IOpeningHoursRepository openingHoursRepository;
 
     @Autowired
-    public OpeningHoursController(CategoryRepository categoryRepository, OpeningHoursRepository openingHoursRepository) {
+    public OpeningHoursController(ICategoryRepository categoryRepository, IOpeningHoursRepository openingHoursRepository) {
         this.categoryRepository = categoryRepository;
         this.openingHoursRepository = openingHoursRepository;
     }
 
-    /**
-     * Looks for the OpeningHours of a category, and it's ancestors on a given day.
-     *
-     * @param categoryId - The category that is looked for.
-     * @param day        - The day of the week.
-     * @return An OpeningHoursTDO with opening hours.
-     * @throws AppointmentBookingException If there is no OpeningHours found for that category or that category does not exist.
-     */
     public OpeningHoursDTO getOpeningHours(@NonNull Integer categoryId,
                                            @NonNull DayOfWeek day) throws AppointmentBookingException {
 

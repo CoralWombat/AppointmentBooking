@@ -1,6 +1,6 @@
 package dev.coralwombat.appointment.booking.clientservice.rest;
 
-import dev.coralwombat.appointment.booking.clientservice.bean.OpeningHoursController;
+import dev.coralwombat.appointment.booking.clientservice.bean.IOpeningHoursController;
 import dev.coralwombat.appointment.booking.clientservice.exception.AppointmentBookingException;
 import dev.coralwombat.appointment.booking.dto.OpeningHoursDTO;
 import io.swagger.annotations.ApiOperation;
@@ -22,10 +22,10 @@ import java.util.Map;
 @RequestMapping("/openingHours")
 public class OpeningHoursService {
 
-    OpeningHoursController openingHoursController;
+    IOpeningHoursController openingHoursController;
 
     @Autowired
-    public OpeningHoursService(OpeningHoursController openingHoursController) {
+    public OpeningHoursService(IOpeningHoursController openingHoursController) {
         this.openingHoursController = openingHoursController;
     }
 

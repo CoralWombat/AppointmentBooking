@@ -14,19 +14,12 @@ import java.time.DayOfWeek;
 
 @Log4j2
 @Repository
-public class OpeningHoursRepository {
+public class OpeningHoursRepository implements IOpeningHoursRepository {
 
     @PersistenceContext
     EntityManager entityManager;
 
-    /**
-     * Runs the select to retrieve the searched OpeningHours. If did not find anything does not search in the parent category.
-     *
-     * @param categoryId - The id of the category to look for.
-     * @param day        - The day of the week to look for.
-     * @return A OpeningHoursDTO with the category and day that was looked for.
-     * @throws NoResultException when there is no result for these inputs.
-     */
+    @Override
     public OpeningHoursDTO getOpeningHours(@NonNull Integer categoryId,
                                            @NonNull DayOfWeek day) throws NoResultException {
         Category category = new Category();
