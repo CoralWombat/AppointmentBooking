@@ -28,4 +28,9 @@ public class CategoryController implements ICategoryController {
     public List<CategoryDTO> getAllCategories() {
         return categoryRepository.getAllCategories();
     }
+
+    @Override
+    public CategoryDTO getCategory(Integer id) {
+        return categoryRepository.getCategory(id);
+    }
 }

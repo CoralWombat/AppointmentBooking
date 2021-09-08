@@ -1,7 +1,6 @@
 package dev.coralwombat.appointment.booking.clientservice.bean;
 
 import dev.coralwombat.appointment.booking.dto.CategoryDTO;
-import dev.coralwombat.appointment.booking.entities.Category;
 
 import java.util.List;
 
@@ -24,5 +23,13 @@ public interface ICategoryController {
      * @return All categories in a {@link List}.
      */
     List<CategoryDTO> getAllCategories();
+
+    /**
+     * Collects a category from the datasource.
+     *
+     * @param id - The id of the category to find.
+     * @return a category represented by the id.
+     */
+    CategoryDTO getCategory(Integer id);
 
 }
