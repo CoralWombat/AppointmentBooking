@@ -1,34 +1,28 @@
 package dev.coralwombat.appointment.booking.admin.rest;
 
-import java.time.DayOfWeek;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import dev.coralwombat.appointment.booking.admin.controller.IOpeningHoursController;
+import dev.coralwombat.appointment.booking.admin.exception.AppointmentBookingException;
 import dev.coralwombat.appointment.booking.dto.OpeningHoursDTO;
-import dev.coralwombat.appointment.booking.entities.Category;
-import dev.coralwombat.appointment.booking.entities.OpeningHours;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.transaction.Transactional;
+import java.time.DayOfWeek;
 
 @Log4j2
 @RestController
 @RequestMapping("/openingHours")
 public class OpeningHoursService {
 
-    @PersistenceContext
-    EntityManager entityManager;
+    IOpeningHoursController openingHoursController;
+
+    public OpeningHoursService(IOpeningHoursController openingHoursController) {
+        this.openingHoursController = openingHoursController;
+    }
 
     @Transactional
     @PutMapping(path = "/put")
@@ -38,24 +32,17 @@ public class OpeningHoursService {
         log.info("OpeningHoursService.put() called with: openingHours=" + openingHours.toString() + ".");
         HttpStatus status = HttpStatus.OK;
 
-        var id = new OpeningHours();
-        id.setCategory(entityManager.find(Category.class, openingHours.getCategory()));
-        id.setDay(openingHours.getDay());
-        var dbOpeningHours = entityManager.find(OpeningHours.class, id);
-        if (dbOpeningHours == null) {
+        try {
+            openingHours = openingHoursController.getOpeningHours(openingHours.getCategory(), openingHours.getDay());
+            if (openingHours == null) {
+                status = HttpStatus.CREATED;
+                openingHours = new OpeningHoursDTO();
+            }
+        } catch (AppointmentBookingException e) {
             status = HttpStatus.CREATED;
-            dbOpeningHours = new OpeningHours();
         }
 
-        dbOpeningHours.setCategory(entityManager.find(Category.class, openingHours.getCategory()));
-        dbOpeningHours.setDay(openingHours.getDay());
-        dbOpeningHours.setFrom(openingHours.getFrom());
-        dbOpeningHours.setTo(openingHours.getTo());
-        if (status == HttpStatus.CREATED) {
-            entityManager.persist(dbOpeningHours);
-        } else {
-            entityManager.merge(dbOpeningHours);
-        }
+        openingHoursController.saveOpeningHours(openingHours);
 
         log.info("OpeningHoursService.put() finished.");
         return ResponseEntity.status(status).build();
@@ -69,10 +56,7 @@ public class OpeningHoursService {
                                          @ApiParam(required = true, value = "The day of the opening hours to delete.") @RequestParam(required = true) DayOfWeek day) {
         log.info("OpeningHoursService.delete() called with: categoryId=" + categoryId + ", day=" + day);
 
-        entityManager.createQuery("DELETE FROM OpeningHours o WHERE o.category = :category AND o.day = :day")
-                .setParameter("category", entityManager.find(Category.class, categoryId))
-                .setParameter("day", day)
-                .executeUpdate();
+        openingHoursController.deleteOpeningHours(categoryId, day);
 
         log.info("OpeningHoursService.delete() finished.");
         return ResponseEntity.ok().build();
