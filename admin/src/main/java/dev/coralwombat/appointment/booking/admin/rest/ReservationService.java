@@ -1,6 +1,6 @@
 package dev.coralwombat.appointment.booking.admin.rest;
 
-import dev.coralwombat.appointment.booking.admin.bean.ReservationController;
+import dev.coralwombat.appointment.booking.admin.controller.IReservationController;
 import dev.coralwombat.appointment.booking.dto.ReservationDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -20,11 +18,12 @@ import java.util.LinkedList;
 @RequestMapping("/reservation")
 public class ReservationService {
 
-    @PersistenceContext
-    EntityManager entityManager;
+    IReservationController reservationController;
 
     @Autowired
-    ReservationController reservationController;
+    public ReservationService(IReservationController reservationController) {
+        this.reservationController = reservationController;
+    }
 
     @GetMapping(path = "/get")
     @ApiOperation(value = "Gets the reservations by a category id.",
@@ -50,9 +49,7 @@ public class ReservationService {
     public ResponseEntity<Object> delete(@ApiParam(required = true, value = "The ID of the reservation to delete.") @RequestParam(required = true) Integer reservationId) {
         log.info("ReservationService.delete() called with: reservationId=" + reservationId + ".");
 
-        entityManager.createQuery("DELETE FROM Reservation c WHERE c.id = :id")
-                .setParameter("id", reservationId)
-                .executeUpdate();
+        reservationController.deleteReservation(reservationId);
 
         log.info("ReservationService.delete() finished.");
         return ResponseEntity.ok().build();
