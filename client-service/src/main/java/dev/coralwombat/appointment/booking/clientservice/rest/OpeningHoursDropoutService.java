@@ -1,6 +1,6 @@
 package dev.coralwombat.appointment.booking.clientservice.rest;
 
-import dev.coralwombat.appointment.booking.clientservice.bean.IOpeningHoursDropoutController;
+import dev.coralwombat.appointment.booking.clientservice.controller.IOpeningHoursDropoutController;
 import dev.coralwombat.appointment.booking.dto.OpeningHoursDropoutDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

@@ -1,4 +1,4 @@
-package dev.coralwombat.appointment.booking.clientservice.bean;
+package dev.coralwombat.appointment.booking.clientservice.controller;
 
 import dev.coralwombat.appointment.booking.clientservice.repository.IOpeningHoursDropoutRepository;
 import dev.coralwombat.appointment.booking.dto.OpeningHoursDropoutDTO;

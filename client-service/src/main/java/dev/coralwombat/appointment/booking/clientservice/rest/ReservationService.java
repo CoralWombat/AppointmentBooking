@@ -1,7 +1,7 @@
 package dev.coralwombat.appointment.booking.clientservice.rest;
 
-import dev.coralwombat.appointment.booking.clientservice.bean.ICategoryController;
-import dev.coralwombat.appointment.booking.clientservice.bean.IReservationController;
+import dev.coralwombat.appointment.booking.clientservice.controller.ICategoryController;
+import dev.coralwombat.appointment.booking.clientservice.controller.IReservationController;
 import dev.coralwombat.appointment.booking.dto.ReservationDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
